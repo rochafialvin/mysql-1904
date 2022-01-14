@@ -45,3 +45,63 @@ ALTER TABLE customers ADD COLUMN address VARCHAR(20);
 
 -- ADD NEW COLUMN (Tentukan Posisi)
 ALTER TABLE customers ADD COLUMN age INT AFTER last_name;
+
+-- RENAME COLUMN
+ALTER TABLE customers CHANGE address alamat VARCHAR(20);
+
+-- DELETE COLUMN
+ALTER TABLE customers DROP COLUMN age;
+
+
+-- ###########
+-- # C R U D #
+-- ###########
+
+-- CREATE DATA
+-- ###########
+INSERT INTO products (variant, price, origin) VALUES ('Mi Goreng', 2.50, 'Indonesia');
+
+INSERT INTO products (price, variant, origin) VALUES (3.00, 'Mi Goreng Aceh',  'Aceh');
+
+INSERT INTO products (variant, price, origin)
+VALUES	('Soto Banjar', 3.50, 'Banjar'),
+		('Soto Banjar Limau Kulit', 3.60, 'Banjar'),
+		('Mi Cakalang', 3.50, 'Manado'),
+        ('Mi Goreng Cakalang',3.00,'Manado'),
+		('Empal Gentong',3.50,'Betawi'),
+		('Soto Betawi',3.00,'Betawi'),
+		('Mi Kocok Bandung',3.00,'Bandung'),
+		('Soto Medan', 2.30,'Medan'),
+		('Kari Ayam Medan', 2.50,'Medan'),
+		('Bulgogi', 4.20, 'Korea'),
+		('Laksa', 4.00, 'Singapore'),
+		('Tomyum', 3.80, 'Thailand');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
