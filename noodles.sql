@@ -166,6 +166,35 @@ WHERE variant = 'Tomyum';
 DELETE FROM products
 WHERE origin = 'Aceh';
 
+-- READ DATA
+-- ###########
+
+-- Tampilkan semua kolom dari tabel products;
+SELECT * FROM products;
+
+-- Tampilkan kolom variant dan origin dari tabel products;
+SELECT variant, origin FROM products;
+
+-- Tampilkan semua kolom yang memiliki harga 3.50 dan juga berasal dari Banjar
+SELECT * FROM products
+WHERE price = 3.50 AND origin = 'Banjar';
+
+-- Tampilkan semua kolom yang memiliki harga 3.00 atau berasal dari Manado
+SELECT * FROM products
+WHERE price = 3.00 OR origin = 'Manado';
+
+
+-- INEQUALITY (>, <, >=, <=, !=)
+
+-- Tampilkan products yang harganya bukan 3.50
+SELECT * FROM products
+WHERE price != 3.50;
+-- Tampilkan products yang origin nya NULL. Khusus untuk NULL tidak menggunakan sama dengan melainkan keyword IS
+SELECT * FROM products
+WHERE origin IS NULL;
+-- Tampilkan products yang origin nya tidak NULL dan juga harga nya bukan 3.00
+SELECT * FROM products
+WHERE origin IS NOT NULL AND price = 3.00;
 
 
 
