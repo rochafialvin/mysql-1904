@@ -28,11 +28,20 @@ CREATE TABLE customers(
 
 CREATE TABLE orders(
 	id INT AUTO_INCREMENT PRIMARY KEY,
-    customer_id INT, -- FOREIGN KEY untuk customer
-    product_id INT, -- FOREIGN KEY untuk product
+    customer_id INT, -- FOREIGN KEY untuk customers
+    product_id INT, -- FOREIGN KEY untuk products
     order_time DATETIME,
     -- kolom customer_id merupakan foreign key yang akan menyimpan data dari kolom id milik tabel customers
     CONSTRAINT FK_CustomerId FOREIGN KEY (customer_id) REFERENCES customers(id) ON UPDATE CASCADE ON DELETE SET NULL,
     -- kolom product_id merupakan foreign key yang akan menyimpan data dari kolom id milik tabel products
     CONSTRAINT FK_ProductId FOREIGN KEY (product_id) REFERENCES products(id) ON UPDATE CASCADE ON DELETE SET NULL
 );
+
+-- DESKRIPSI TABLE / INFORMASI TABLE (jumlah kolum, nama beserta tipe data setiap kolum , dst)
+DESC customers;
+
+-- ADD NEW COLUMN (Paling belakang)
+ALTER TABLE customers ADD COLUMN address VARCHAR(20);
+
+-- ADD NEW COLUMN (Tentukan Posisi)
+ALTER TABLE customers ADD COLUMN age INT AFTER last_name;
