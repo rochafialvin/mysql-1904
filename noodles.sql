@@ -189,12 +189,61 @@ WHERE price = 3.00 OR origin = 'Manado';
 -- Tampilkan products yang harganya bukan 3.50
 SELECT * FROM products
 WHERE price != 3.50;
+
 -- Tampilkan products yang origin nya NULL. Khusus untuk NULL tidak menggunakan sama dengan melainkan keyword IS
 SELECT * FROM products
 WHERE origin IS NULL;
+
 -- Tampilkan products yang origin nya tidak NULL dan juga harga nya bukan 3.00
 SELECT * FROM products
 WHERE origin IS NOT NULL AND price = 3.00;
+
+-- EXERCISE
+-- ########
+
+-- Tampilkan nama depan dan nomor handphone untuk perempuan yang memiliki nama belakang = Jordan
+SELECT first_name, phone_number FROM customers
+WHERE gender = 'F' AND last_name = 'Jordan';
+
+-- Tampilkan nama product yang memiliki harga lebih besar dari 3.50 atau berasal dari Medan
+SELECT variant FROM products
+WHERE price > 3.50 OR origin = 'Medan';
+
+-- Tampilkan semua kolom untuk laki - laki yang tidak memiliki nomor handphone
+SELECT * FROM customers
+WHERE gender = 'M' AND phone_number IS NULL;
+
+-- Tampilkan semua kolom untuk customer yang memiliki nama belakang antara 'Smith', 'Jordan', 'Armstrong';
+SELECT * FROM customers
+-- WHERE last_name = 'Smith' OR last_name = 'Jordan' OR last_name = 'Armstrong';
+WHERE last_name IN('Smith', 'Jordan', 'Armstrong');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
