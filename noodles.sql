@@ -16,3 +16,23 @@ CREATE TABLE products(
     -- salah : 7689.99
     origin VARCHAR(20)
 );
+
+CREATE TABLE customers(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(20),
+    last_name VARCHAR(20),
+    gender ENUM('M', 'F'), -- ENUM memungkinkan kita untuk menentukan value apa saja yang dapat disimpan pada suatu kolom
+	phone_number VARCHAR(13)
+);
+
+
+CREATE TABLE orders(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    customer_id INT, -- FOREIGN KEY untuk customer
+    product_id INT, -- FOREIGN KEY untuk product
+    order_time DATETIME,
+    -- kolom customer_id merupakan foreign key yang akan menyimpan data dari kolom id milik tabel customers
+    CONSTRAINT FK_CustomerId FOREIGN KEY (customer_id) REFERENCES customers(id) ON UPDATE CASCADE ON DELETE SET NULL,
+    -- kolom product_id merupakan foreign key yang akan menyimpan data dari kolom id milik tabel products
+    CONSTRAINT FK_ProductId FOREIGN KEY (product_id) REFERENCES products(id) ON UPDATE CASCADE ON DELETE SET NULL
+);
