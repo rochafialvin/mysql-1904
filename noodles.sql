@@ -77,6 +77,7 @@ VALUES	('Soto Banjar', 3.50, 'Banjar'),
 		('Laksa', 4.00, 'Singapore'),
 		('Tomyum', 3.80, 'Thailand');
 
+
 INSERT INTO customers (first_name, last_name, gender, phone_number)
 VALUES ('Hinata','Shoyo','M','01123147789'),
 ('Elon','Musk','F','01123439899'),('Mark','Zuckerberg','M','01174592013'),
@@ -131,14 +132,39 @@ INSERT INTO orders (product_id,customer_id,order_time) VALUES (1,1,'2017-01-01 0
 (5,2,'2017-02-13 12-34-56'),(4,3,'2017-02-14 08-22-43'),(5,4,'2017-02-14 09-12-56'),(3,5,'2017-02-15 08-09-10'),(6,7,'2017-02-15 09-05-12'),(1,8,'2017-02-15 09-27-50'),(2,9,'2017-02-16 08-51-12'),(3,10,'2017-02-16 13-07-46'),(4,11,'2017-02-17 08-03-55'),(4,12,'2017-02-17 09-12-11'),(5,10,'2017-02-17 11-41-17'),(6,18,'2017-02-17 13-05-56'),(7,19,'2017-02-18 08-33-27'),(1,17,'2017-02-19 08-12-31'),(1,1,'2017-02-20 09-50-17'),(3,5,'2017-02-20 09-51-29'),(4,6,'2017-02-20 10-43-39'),(3,1,'2017-02-21 08-32-17'),(1,1,'2017-02-21 10-30-11'),(3,2,'2017-02-21 11-08-45'),(4,3,'2017-02-22 11-46-32'),(2,15,'2017-02-22 13-35-16'),(6,13,'2017-02-23 08-34-48'),(4,24,'2017-02-24 08-32-03'),(2,13,'2017-02-25 08-03-12'),(7,17,'2017-02-25 09-34-23'),(7,23,'2017-02-25 11-32-54'),(5,12,'2017-02-26 11-47-34'),
 (6,4,'2017-02-27 12-12-34'),(1,1,'2017-02-28 08-59-22');
 
+-- UPDATE DATA
+-- ###########
 
+-- UPDATE table_name
+-- SET column_name = new_value
+-- WHERE conditions;
 
+-- Ubah nilai origin menjadi Jakarta untuk produk yang memiliki id = 7
+UPDATE products 
+SET origin = 'Jakarta'
+WHERE id = 7;
 
+-- Ubah nilai harga dan origin untuk semua produk bernama Mi Goreng
+UPDATE products
+SET price = 3.25, origin = 'Jakarta'
+WHERE variant = 'Mi Goreng';
 
+-- Ubah nilai origin menjadi DKI untuk semua data yang origin nya adalah Jakarta
+UPDATE products
+SET origin = 'DKI'
+WHERE origin = 'Jakarta';
 
+-- Ubah nilai origin menjadi NULL untuk semua produk yang variant nya adalah Tomyum
+UPDATE products
+SET origin = NULL
+WHERE variant = 'Tomyum';
 
+-- DELETE DATA
+-- ###########
 
-
+-- Hapus semua data dari products yang memiliki origin Aceh
+DELETE FROM products
+WHERE origin = 'Aceh';
 
 
 
