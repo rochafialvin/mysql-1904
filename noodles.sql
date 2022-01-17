@@ -443,16 +443,28 @@ SELECT
 	first_name, last_name,
 	variant,
 	order_time
-FROM customers c
-JOIN orders o ON c.id = o.customer_id
-JOIN products p ON p.id = o.product_id
+FROM customers 
+JOIN orders ON customers.id = orders.customer_id
+JOIN products ON products.id = orders.product_id
 WHERE variant = 'Soto Banjar';
 
+-- CASCADE : Mengikut
+-- SET NULL : Akan diganti jadi null
+-- RESTRICT : Akan menggagalkan operasi
 
+-- ON UPDATE CASCADE : Jika primary key berubah, maka foreign key akan ikut berubah
+-- ON DELETE SET NULL : Jika primary key dihapus, maka foreign key akan di set menjadi null.
 
+-- product_id : ON UPDATE CASCADE ON DELETE SET NULL (before)
+-- product_id : ON UPDATE CASCADE ON DELETE RESTRICT (after)
 
+-- Drop Foreign Key
+ALTER TABLE orders
+DROP FOREIGN KEY FK_ProductId;
 
-
-
+-- (Re) Create Foreign Key
+ALTER TABLE orders
+ADD CONSTRAINT FK_ProductId
+FOREIGN KEY (product_id) REFERENCES products(id) ON UPDATE CASCADE ON DELETE RESTRICT;
 
 
