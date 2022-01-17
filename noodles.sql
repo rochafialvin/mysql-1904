@@ -230,11 +230,40 @@ SELECT * FROM customers
 WHERE last_name NOT IN('Smith', 'Jordan', 'Armstrong');
 
 -- Tampilkan informasi pesanan sejak tanggal 5 pukul 00:00 hingga 19 pukul 10:00:00 januari 2017;
--- Tampilkan informasi pesanan sejak tanggal 5 hingga tanggal 19 sebelum jam 10 pagi;
+-- Tampilkan informasi pesanan sejak tanggal 5 hingga tanggal 19 terakhir jam 10 pagi, lewat satu detik tidak akan muncul;
 SELECT * FROM orders
 WHERE order_time >= '2017-01-05 00:00:00' AND order_time <= '2017-01-19 10:00:00';
 
 -- Tampilkan informasi pesanan sejak tanggal 5 hingga 20 januari 2017;
 SELECT * FROM orders
 WHERE order_time >= '2017-01-05 00:00:00' AND order_time <= '2017-01-20 23:59:59';
+
+-- BETWEEN
+-- Tampilkan pesanan yang terjadi pada tanggal 5 hingga 20 januari 2017;
+SELECT * FROM orders
+WHERE order_time BETWEEN '2017-01-05 00:00:00' AND '2017-01-20 23:59:59';
+
+-- Tampilkan pesanan yang dilakukan oleh user dengan id 5 hingga 11;
+SELECT * FROM orders
+WHERE customer_id BETWEEN 5 AND 11;
+
+-- LIKE (case in-sensitive : tidak membedakan huruf kapital dan huruf kecil)
+-- % , karakter apapun , dengan jumlah berapapun
+
+-- Customer yang memiliki huruf o, sebelum dan sesudah huruf o boleh ada karakter apapun dan berapapun
+-- Elon, Leonardo, John, Gob, George, Toby
+SELECT first_name FROM customers
+WHERE first_name LIKE '%o%';
+
+-- Customer yang memiliki akhiran l , tidak boleh ada karakter setelah huruf l, tapi boleh ada karakter sebelum l
+-- Neil, Michael, Paul
+SELECT first_name FROM customers
+WHERE first_name LIKE '%l';
+
+-- Customer yang memiliki awalan l
+-- Leonardo, Linda, Lucian
+SELECT first_name FROM customers
+WHERE first_name LIKE 'l%';
+
+
 
