@@ -215,49 +215,26 @@ WHERE gender = 'M' AND phone_number IS NULL;
 
 -- Tampilkan semua kolom untuk customer yang memiliki nama belakang antara 'Smith', 'Jordan', 'Armstrong';
 SELECT * FROM customers
--- WHERE last_name = 'Smith' OR last_name = 'Jordan' OR last_name = 'Armstrong';
+WHERE last_name = 'Smith' OR last_name = 'Jordan' OR last_name = 'Armstrong';
+
+USE noodles;
+
+-- IN
+-- Tampilkan semua kolom untuk customer yang memiliki nama belakang antara 'Smith', 'Jordan', 'Armstrong';
+SELECT * FROM customers
 WHERE last_name IN('Smith', 'Jordan', 'Armstrong');
 
+-- NOT IN
+-- Tampilkan semua kolom untuk customer yang memiliki nama belakang selain 'Smith', 'Jordan', 'Armstrong';
+SELECT * FROM customers
+WHERE last_name NOT IN('Smith', 'Jordan', 'Armstrong');
 
+-- Tampilkan informasi pesanan sejak tanggal 5 pukul 00:00 hingga 19 pukul 10:00:00 januari 2017;
+-- Tampilkan informasi pesanan sejak tanggal 5 hingga tanggal 19 sebelum jam 10 pagi;
+SELECT * FROM orders
+WHERE order_time >= '2017-01-05 00:00:00' AND order_time <= '2017-01-19 10:00:00';
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+-- Tampilkan informasi pesanan sejak tanggal 5 hingga 20 januari 2017;
+SELECT * FROM orders
+WHERE order_time >= '2017-01-05 00:00:00' AND order_time <= '2017-01-20 23:59:59';
 
