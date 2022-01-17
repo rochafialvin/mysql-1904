@@ -369,11 +369,47 @@ SELECT
 	SECOND('2017-01-20 23:59:59') AS Detik;
 
 
+-- JOIN : INNER JOIN | LEFT OUTER JOIN | RIGHT OUTER JOIN
+-- #######################################################
+
+-- Menampilkan variant produk (products) dan waktu order (orders) 
+SELECT variant, ORDER_TIME 
+FROM products JOIN orders  ON orders.product_id = products.id ORDER BY products.id;
+
+-- tampilkan semua products, orders mengikuti
+SELECT variant, ORDER_TIME 
+FROM products LEFT JOIN orders ON orders.product_id = products.id ORDER BY products.id;
+
+-- tampilkan semua products, orders mengikuti
+SELECT variant, ORDER_TIME
+FROM orders RIGHT JOIN products ON orders.product_id = products.id ORDER BY products.id;
 
 
+-- Empat pesanan terakhir untuk variant Mi Cakalang;
+SELECT variant, price, order_time
+FROM products 
+JOIN orders ON products.id = orders.product_id
+WHERE variant = 'Mi Cakalang' ORDER BY order_time DESC LIMIT 4 ;
 
+-- alias column
+SELECT variant AS 'Rasa', price AS Harga, order_time AS 'Waktu Pesanan'
+FROM products 
+JOIN orders ON products.id = orders.product_id
+WHERE variant = 'Mi Cakalang' ORDER BY order_time DESC LIMIT 4 ;
 
+-- alias table
+SELECT variant AS 'Rasa', price AS Harga, order_time AS 'Waktu Pesanan'
+FROM products p 
+JOIN orders o ON p.id = o.product_id
+WHERE variant = 'Mi Cakalang' ORDER BY order_time DESC LIMIT 4 ;
 
+-- definisikan nama tabel saat hendak manampilkan suatu kolom yang sama
+SELECT 
+	p.id AS 'Product Id',
+	variant AS 'Rasa', price AS Harga,
+	o.id AS 'Order Id', order_time AS 'Waktu Pesanan' 
+FROM products p 
+JOIN orders o ON p.id = o.product_id;
 
 
 
