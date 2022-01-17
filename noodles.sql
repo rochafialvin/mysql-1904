@@ -249,6 +249,7 @@ WHERE customer_id BETWEEN 5 AND 11;
 
 -- LIKE (case in-sensitive : tidak membedakan huruf kapital dan huruf kecil)
 -- % , karakter apapun , dengan jumlah berapapun
+-- _ , krakter apapun, satu karakter
 
 -- Customer yang memiliki huruf o, sebelum dan sesudah huruf o boleh ada karakter apapun dan berapapun
 -- Elon, Leonardo, John, Gob, George, Toby
@@ -265,5 +266,74 @@ WHERE first_name LIKE '%l';
 SELECT first_name FROM customers
 WHERE first_name LIKE 'l%';
 
+-- Customer yang memiliki huruf o, hanya boleh ada satu karakter pada awal dan akhir nama.
+-- Gob
+SELECT first_name FROM customers
+WHERE first_name LIKE '_o_';
+-- Customer yang memiliki huruf o
+-- sebelum huruf o boleh memiliki karakter berapapun, setelah huruf o hanya boleh ada satu karakter.
+SELECT first_name FROM customers
+WHERE first_name LIKE '%o_';
 
+SELECT first_name FROM customers
+WHERE first_name LIKE '_o%';
+
+-- Products yang mengandung kata soto
+SELECT * FROM products
+WHERE variant LIKE '%soto%';
+
+-- ORDER BY
+-- Mengurutkan data berdasarkan kolom tertentu.
+-- ASC / ASCENDING  : kecil --> besar (default)
+-- DESC / DESCENDING : besar --> kecil
+
+-- Mengurutkan produk berdasarkan harga (dari yang termurah).
+SELECT * FROM products
+ORDER BY price;
+
+-- Mengurutkan produk berdasarkan harga (dari yang termahal).
+SELECT * FROM products
+ORDER BY price DESC ;
+
+-- Pesanan yang dilakukan oleh user dengan id 4 dan diurutkan berdasarkan tanggal (dari yang terbaru)
+SELECT * FROM orders
+WHERE customer_id = 4
+ORDER BY order_time DESC;
+
+-- DISTINCT
+-- ########
+-- Menampilkan data secara unique
+
+-- Menampilkan daftar origin products
+SELECT DISTINCT origin FROM products;
+
+-- Products apa saja yang pernah dipesan
+SELECT DISTINCT product_id FROM orders;
+
+-- LIMIT & OFFSET
+-- ##############
+-- LIMIT  : Membatasi jumlah data
+-- OFFSET : Skip data
+
+SELECT * FROM products LIMIT 5;
+SELECT * FROM customers LIMIT 3 OFFSET 10;
+
+
+-- ALIAS
+-- #####
+-- Mengubah nama kolom saat ditampilkan
+
+SELECT 
+	first_name AS 'Nama depan',
+	last_name AS 'Nama belakang',
+	phone_number AS 'Nomor Telpon'
+FROM customers;
+
+-- Menambahkan kolom baru untuk ditampilkan dan menggunakan alias untuk memberi nama kolom tersebut
+SELECT 
+	variant AS Variant,
+	price AS 'Price 2021',
+	ROUND(price + (price * 0.1), 2) AS 'Price 2022',
+	origin AS Origin
+FROM products;
 
