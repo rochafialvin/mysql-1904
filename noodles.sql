@@ -384,7 +384,6 @@ FROM products LEFT JOIN orders ON orders.product_id = products.id ORDER BY produ
 SELECT variant, ORDER_TIME
 FROM orders RIGHT JOIN products ON orders.product_id = products.id ORDER BY products.id;
 
-
 -- Empat pesanan terakhir untuk variant Mi Cakalang;
 SELECT variant, price, order_time
 FROM products 
@@ -410,6 +409,44 @@ SELECT
 	o.id AS 'Order Id', order_time AS 'Waktu Pesanan' 
 FROM products p 
 JOIN orders o ON p.id = o.product_id;
+
+-- Daftar pesanan berikut dengan nama pelanggan;
+SELECT
+	first_name 'Nama depan', last_name 'Nama belakang', phone_number 'Nomor telpon',
+	order_time 'Waktu pemesanan'
+FROM customers c
+JOIN orders o ON c.id = o.customer_id;
+
+-- Tampilkan daftar pesanan berikut dengan nama pelanggan dan juga variant yang dipesan.
+-- first_name, last_name (customers)
+-- order_time (orders)
+-- variant (products)
+
+SELECT
+	first_name, last_name,
+	variant,
+	order_time
+FROM customers c
+JOIN orders o ON c.id = o.customer_id
+JOIN products p ON p.id = o.product_id;
+
+SELECT
+	first_name, last_name,
+	variant,
+	order_time
+FROM customers c
+JOIN orders o ON c.id = o.customer_id
+JOIN products p ON p.id = o.product_id
+WHERE first_name = 'Elon';
+
+SELECT
+	first_name, last_name,
+	variant,
+	order_time
+FROM customers c
+JOIN orders o ON c.id = o.customer_id
+JOIN products p ON p.id = o.product_id
+WHERE variant = 'Soto Banjar';
 
 
 
