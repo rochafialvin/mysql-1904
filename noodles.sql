@@ -338,9 +338,48 @@ SELECT
 FROM products;
 
 -- EXERCISE
+
 -- Tampilkan nama produk dan harga untuk semua product yang berasal dari DKI atau Manado
+SELECT variant, price FROM products WHERE origin = 'DKI' OR origin = 'Manado';
+SELECT variant, price FROM products WHERE origin IN('DKI', 'Manado');
+
 -- Tampilkan semua kolom untuk order yang terjadi pada bulan februari untuk costumer dengan id 2 , 4, 6, 8
+SELECT * FROM orders WHERE order_time LIKE '%-02-%' AND customer_id IN(2, 4, 6, 8) ;
+
 -- Tampilkan nama depan, nama belakang, nomor tlp untuk customer yang nama belakang mengandung huruf 'ar'
+SELECT first_name, last_name, phone_number FROM customers WHERE last_name LIKE '%ar%';
+
 -- Tampilkan semua kolom untuk 3 order pertama yang dilakukan oleh customer dengan id 4
+SELECT * FROM orders WHERE customer_id = 4 LIMIT 3;
+
 -- Tampilkan product id berapa saja yang berhasil terjual pada bulan februari
+SELECT DISTINCT product_id FROM orders WHERE MONTH(order_time) = 2;
+
 -- Tampilkan semua kolom untuk orderan terakhir yang dilakukan oleh customer dengan id 4
+SELECT * FROM orders WHERE customer_id = 4 ORDER BY order_time DESC LIMIT 1 ;
+
+-- MONTH(), YEAR(), DATE()
+SELECT 
+	YEAR('2017-01-20 23:59:59') AS Tahun,
+	MONTH('2017-01-20 23:59:59') AS Bulan,
+	DAY('2017-01-20 23:59:59') AS Tanggal,
+	TIME('2017-01-20 23:59:59') AS Waktu,
+	HOUR('2017-01-20 23:59:59') AS Jam,
+	MINUTE('2017-01-20 23:59:59') AS Menit,
+	SECOND('2017-01-20 23:59:59') AS Detik;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
