@@ -337,3 +337,10 @@ SELECT
 	origin AS Origin
 FROM products;
 
+-- EXERCISE
+-- Tampilkan nama produk dan harga untuk semua product yang berasal dari DKI atau Manado
+-- Tampilkan semua kolom untuk order yang terjadi pada bulan februari untuk costumer dengan id 2 , 4, 6, 8
+-- Tampilkan nama depan, nama belakang, nomor tlp untuk customer yang nama belakang mengandung huruf 'ar'
+-- Tampilkan semua kolom untuk 3 order pertama yang dilakukan oleh customer dengan id 4
+-- Tampilkan product id berapa saja yang berhasil terjual pada bulan februari
+-- Tampilkan semua kolom untuk orderan terakhir yang dilakukan oleh customer dengan id 4
