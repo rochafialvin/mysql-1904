@@ -6,8 +6,6 @@ USE noodles;
 
 SHOW TABLES;
 
-DROP TABLE customers;
-
 -- Hapus foreign key terlebih dahulu untuk memutus 'rantai' yang menghubungkan products dengan orders
 ALTER TABLE orders
 DROP FOREIGN KEY FK_ProductId;
@@ -16,7 +14,12 @@ DROP FOREIGN KEY FK_ProductId;
 ALTER TABLE orders
 DROP FOREIGN KEY FK_CustomerId;
 
-CREATE TABLE products(
+DROP TABLE orders; -- 1
+DROP TABLE products; -- 2
+DROP TABLE customers; -- 3
+
+-- 4
+CREATE TABLE products( 
 	id INT AUTO_INCREMENT PRIMARY KEY, -- PRIMARY KEY harus adalah sebuah kolom yang nilainya unique, AUTO_INCREMENT agar nilai pada id bertambah secara otomatis
 	variant VARCHAR(30), -- Varchar (string) dengan maksimal 30 karakter
     price DECIMAL(3, 2), -- Jumlah digit total yang dimiliki maksimal adalah tiga digit, dengan dua digit di belakang koma
@@ -29,6 +32,7 @@ CREATE TABLE products(
 	updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP -- 2022-01-19 19:24:00
 );
 
+-- 5
 CREATE TABLE customers(
 	id INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(20),
@@ -40,6 +44,7 @@ CREATE TABLE customers(
 	updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP -- Mencatat waktu terakhir kali data mengalami perubahan
 );
 
+--6
 CREATE TABLE orders(
 	id INT AUTO_INCREMENT PRIMARY KEY,
     customer_id INT, -- FOREIGN KEY untuk customers
@@ -76,11 +81,11 @@ ALTER TABLE customers DROP COLUMN age;
 -- CREATE DATA
 -- ###########
 SELECT * FROM products;
-
+-- 7
 INSERT INTO products (variant, price, origin) VALUES ('Mi Goreng', 2.50, 'Indonesia');
-
+-- 8
 INSERT INTO products (price, variant, origin) VALUES (3.00, 'Mi Goreng Aceh',  'Aceh');
-
+-- 9
 INSERT INTO products (variant, price, origin)
 VALUES	('Soto Banjar', 3.50, 'Banjar'),
 		('Soto Banjar Limau Kulit', 3.60, 'Banjar'),
@@ -95,7 +100,7 @@ VALUES	('Soto Banjar', 3.50, 'Banjar'),
 		('Laksa', 4.00, 'Singapore'),
 		('Tomyum', 3.80, 'Thailand');
 
-
+-- 10
 INSERT INTO customers (first_name, last_name, age, gender, phone_number)
 VALUES ('Hinata','Shoyo', 15,'M','01123147789'),
 ('Elon','Musk', 20,'F','01123439899'),('Mark','Zuckerberg', 28,'M','01174592013'),
@@ -110,7 +115,7 @@ VALUES ('Hinata','Shoyo', 15,'M','01123147789'),
 ('Steph','Smith', 53,  'M','01144473330'),('Jennifer',NULL, 20, 'F',NULL),
 ('Toby','Wan', 34, 'M','01176009822'),('Paul','London', 33,'M','01966947113');
 
-
+-- 11
 INSERT INTO orders (product_id,customer_id,order_time) VALUES (1,1,'2017-01-01 08-02-11'),(1,2,'2017-01-01 08-05-16'),
 (5,12,'2017-01-01 08-44-34'),(3,4,'2017-01-01 09-20-02'),
 (1,9,'2017-01-01 11-51-56'),(6,22,'2017-01-01 13-07-10'),
