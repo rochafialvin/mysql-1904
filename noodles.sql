@@ -544,6 +544,8 @@ GROUP BY variant ORDER BY total_profit;
 
 -- Harga mi termahal
 SELECT MAX(price) FROM products;
+-- Data mi termahal
+SELECT variant, price FROM products ORDER BY price DESC LIMIT 1;
 
 -- Umur paling tua
 SELECT MAX(age) FROM customers;
@@ -553,4 +555,30 @@ SELECT MIN(price) FROM products;
 
 -- Umur paling muda
 SELECT MIN(age) FROM customers;
+
+
+-- profit terendah yang di dapatkan oleh sebuah variant (1)
+SELECT SUM(price) AS total_profit
+FROM orders o
+JOIN products p ON p.id = o.product_id
+GROUP BY variant ORDER BY total_profit LIMIT 1;
+
+-- profit terendah yang di dapatkan oleh sebuah variant (2)
+-- Kolom total_profit didapatkan dari table yang dihasilkan dari sebuah query
+SELECT MIN(total_profit) FROM (SELECT variant, SUM(price) AS total_profit
+FROM orders o
+JOIN products p ON p.id = o.product_id
+GROUP BY variant) AS profit_per_variant;
+
+
+-- Exercise
+
+-- AVG
+-- Rata2 umur pelanggan (average_age)
+-- Rata2 umur wanita dan pria. (gender, average_age)
+
+-- COUNT
+-- Jumlah customer dikelompokkan berdasarkan umur. (age, total_customer)
+-- Jumlah order masing - masing user (first_name, last_name, total_order)
+-- Tampilkan top 3 customer pada bulan januari (first_name, last_name, total_order)
 
