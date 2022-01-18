@@ -575,10 +575,36 @@ GROUP BY variant) AS profit_per_variant;
 
 -- AVG
 -- Rata2 umur pelanggan (average_age)
+SELECT ROUND(AVG(age)) AS average_age FROM customers;
 -- Rata2 umur wanita dan pria. (gender, average_age)
+SELECT gender, ROUND(AVG(age)) AS average_age FROM customers GROUP BY gender;
+
 
 -- COUNT
 -- Jumlah customer dikelompokkan berdasarkan umur. (age, total_customer)
--- Jumlah order masing - masing user (first_name, last_name, total_order)
--- Tampilkan top 3 customer pada bulan januari (first_name, last_name, total_order)
+SELECT age, COUNT(*) AS total_customer FROM customers GROUP BY age ORDER BY age;
 
+-- Jumlah order masing - masing user (first_name, last_name, total_order)
+SELECT
+	first_name, last_name,
+	COUNT(*) AS total_order
+FROM customers c
+JOIN orders o ON c.id = o.customer_id
+GROUP BY first_name, last_name;
+
+-- Tampilkan top 3 customer pada bulan januari (first_name, last_name, total_order)
+SELECT
+	first_name, last_name,
+	COUNT(*) AS total_order
+FROM customers c
+JOIN orders o ON c.id = o.customer_id
+WHERE MONTH(order_time) = 1
+GROUP BY first_name, last_name ORDER BY total_order DESC LIMIT 3;
+
+-- Dapat group berdasarkan primary key atau foreign key tanpa harus dengan kolom lainnya (yang digunakan pada keyword ON)
+-- Tribute for : Mujaddid
+SELECT first_name, last_name, phone_number, COUNT(*) AS total_order
+FROM customers c
+JOIN orders o 
+ON c.id = o.customer_id
+GROUP BY o.customer_id;
