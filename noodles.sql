@@ -6,6 +6,16 @@ USE noodles;
 
 SHOW TABLES;
 
+DROP TABLE customers;
+
+-- Hapus foreign key terlebih dahulu untuk memutus 'rantai' yang menghubungkan products dengan orders
+ALTER TABLE orders
+DROP FOREIGN KEY FK_ProductId;
+
+-- Hapus foreign key terlebih dahulu untuk memutus 'rantai' yang menghubungkan customers dengan orders
+ALTER TABLE orders
+DROP FOREIGN KEY FK_CustomerId;
+
 CREATE TABLE products(
 	id INT AUTO_INCREMENT PRIMARY KEY, -- PRIMARY KEY harus adalah sebuah kolom yang nilainya unique, AUTO_INCREMENT agar nilai pada id bertambah secara otomatis
 	variant VARCHAR(30), -- Varchar (string) dengan maksimal 30 karakter
@@ -14,23 +24,29 @@ CREATE TABLE products(
     -- DECIMAL (5, 2) -- Maksimal terdapat 5 digit, dengan 2 digit di belakang koma
     -- benar : 3.50 , 23.34, 234.99,
     -- salah : 7689.99
-    origin VARCHAR(20)
+    origin VARCHAR(20),
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP, -- 2022-01-18 09:24:00
+	updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP -- 2022-01-19 19:24:00
 );
 
 CREATE TABLE customers(
 	id INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(20),
     last_name VARCHAR(20),
+    age INT NOT NULL, -- NOT NULL : kolom ini tidak boleh kosong
     gender ENUM('M', 'F'), -- ENUM memungkinkan kita untuk menentukan value apa saja yang dapat disimpan pada suatu kolom
-	phone_number VARCHAR(13)
+	phone_number VARCHAR(13),
+	created_at DATETIME DEFAULT CURRENT_TIMESTAMP, -- Mencatat waktu saat data baru ditambahkan
+	updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP -- Mencatat waktu terakhir kali data mengalami perubahan
 );
-
 
 CREATE TABLE orders(
 	id INT AUTO_INCREMENT PRIMARY KEY,
     customer_id INT, -- FOREIGN KEY untuk customers
     product_id INT, -- FOREIGN KEY untuk products
     order_time DATETIME,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP, -- 2022-01-18 09:24:00
+	updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, -- 2022-01-19 19:24:00
     -- kolom customer_id merupakan foreign key yang akan menyimpan data dari kolom id milik tabel customers
     CONSTRAINT FK_CustomerId FOREIGN KEY (customer_id) REFERENCES customers(id) ON UPDATE CASCADE ON DELETE SET NULL,
     -- kolom product_id merupakan foreign key yang akan menyimpan data dari kolom id milik tabel products
@@ -59,6 +75,8 @@ ALTER TABLE customers DROP COLUMN age;
 
 -- CREATE DATA
 -- ###########
+SELECT * FROM products;
+
 INSERT INTO products (variant, price, origin) VALUES ('Mi Goreng', 2.50, 'Indonesia');
 
 INSERT INTO products (price, variant, origin) VALUES (3.00, 'Mi Goreng Aceh',  'Aceh');
@@ -78,19 +96,19 @@ VALUES	('Soto Banjar', 3.50, 'Banjar'),
 		('Tomyum', 3.80, 'Thailand');
 
 
-INSERT INTO customers (first_name, last_name, gender, phone_number)
-VALUES ('Hinata','Shoyo','M','01123147789'),
-('Elon','Musk','F','01123439899'),('Mark','Zuckerberg','M','01174592013'),
-('Leonardo','Davinci','M',NULL),('Sarah','Teressa','F','01176348290'),
-('Neil','Armstrong','F','01145787353'),('Michael','Jordan','M','01980289282'),
-('Daily','Nash','F','01176987789'),('Max','Jordan','M','01173456782'),
-('Senku',NULL,'F','01139287883'),('Linda','Jordan','F','01176923804'),
-('Kevin','Hard','M',NULL),('John','Smith','M','01174987221'),
-('John','Teressa','M',NULL),('Elon','Smith','F','01176984116'),('Gob','Jordan','M','01176985498'),
-('George','Jordan','M','01176984303'),('Lucian','Jordan','F','01198773214'),
-('George','Evans','M','01174502933'),('Emily','Sinek','F','01899284352'),
-('Steph','Smith','M','01144473330'),('Jennifer',NULL,'F',NULL),
-('Toby','Wan','M','01176009822'),('Paul','London','M','01966947113');
+INSERT INTO customers (first_name, last_name, age, gender, phone_number)
+VALUES ('Hinata','Shoyo', 15,'M','01123147789'),
+('Elon','Musk', 20,'F','01123439899'),('Mark','Zuckerberg', 28,'M','01174592013'),
+('Leonardo','Davinci', 35,'M',NULL),('Sarah','Teressa', 20, 'F','01176348290'),
+('Neil','Armstrong', 40,'F','01145787353'),('Michael','Jordan', 55,'M','01980289282'),
+('Daily','Nash',35,'F','01176987789'),('Max','Jordan',35,'M','01173456782'),
+('Senku',NULL, 19, 'F','01139287883'),('Linda','Jordan', 19,'F','01176923804'),
+('Kevin','Hard', 40, 'M',NULL),('John','Smith', 56,'M','01174987221'),
+('John','Teressa', 36,'M',NULL),('Elon','Smith', 38, 'F','01176984116'),('Gob','Jordan', 36,'M','01176985498'),
+('George','Jordan', 41,'M','01176984303'),('Lucian','Jordan', 28, 'F','01198773214'),
+('George','Evans', 33, 'M','01174502933'),('Emily','Sinek',37, 'F','01899284352'),
+('Steph','Smith', 53,  'M','01144473330'),('Jennifer',NULL, 20, 'F',NULL),
+('Toby','Wan', 34, 'M','01176009822'),('Paul','London', 33,'M','01966947113');
 
 
 INSERT INTO orders (product_id,customer_id,order_time) VALUES (1,1,'2017-01-01 08-02-11'),(1,2,'2017-01-01 08-05-16'),
@@ -134,6 +152,7 @@ INSERT INTO orders (product_id,customer_id,order_time) VALUES (1,1,'2017-01-01 0
 
 -- UPDATE DATA
 -- ###########
+SELECT * FROM products;
 
 -- UPDATE table_name
 -- SET column_name = new_value
@@ -448,7 +467,7 @@ JOIN orders ON customers.id = orders.customer_id
 JOIN products ON products.id = orders.product_id
 WHERE variant = 'Soto Banjar';
 
--- CASCADE : Mengikut
+-- CASCADE  : Mengikut
 -- SET NULL : Akan diganti jadi null
 -- RESTRICT : Akan menggagalkan operasi
 
@@ -466,5 +485,17 @@ DROP FOREIGN KEY FK_ProductId;
 ALTER TABLE orders
 ADD CONSTRAINT FK_ProductId
 FOREIGN KEY (product_id) REFERENCES products(id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+-- Add Column age, created_at, updated_at
+-- created_at : kolom yang akan mencatat waktu saat data baru diinput
+-- updated_at : kolom yang akan mencatat waktu terakhir kali data diupdate
+
+-- data yang dikirim : first_name, last_name, age, phone_number
+-- data yang terisi oleh mysql : id, created_at, updated_at
+ALTER TABLE customers
+ADD age INT AFTER last_name,
+ADD created_at DATETIME DEFAULT CURRENT_TIMESTAMP, -- current_timestamp : waktu saat ini (saat data masuk)
+ADD updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
+
 
 
